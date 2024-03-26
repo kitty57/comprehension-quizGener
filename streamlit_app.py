@@ -65,11 +65,11 @@ def main():
     i=a.find('{')
     extracted_string = a[i:-4]
     d=eval(extracted_string)
-    for question, details in d.items():
+    for idx, (question, details) in enumerate(d.items()):
         st.write(question)
         options = details['options']
         st.write("Options:", ", ".join(options))
-        user_answer = st.text_input("Your answer:")
+        user_answer = st.text_input(f"Your answer for question {idx+1}:")
         correct_answer_index = details['answer']
         correct_answer = options[correct_answer_index]
         feedback = details['feedback']
