@@ -71,7 +71,7 @@ def main():
         selected_option = st.selectbox("Choose your answer:", options)
         correct_answer_index = details['answer']
         feedback = details['feedback']
-        if answer == options[correct_answer_index]:
+        if selected_option == options[correct_answer_index]:
             st.write("Correct!")
         else:
             st.write("Incorrect. Feedback:", feedback)
