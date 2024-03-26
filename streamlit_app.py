@@ -68,7 +68,7 @@ def main():
     for i in d:
       st.write("options: ",d[i]['options'])
       options=d[i]['options']
-      a=st.text_input(f"enter answer {i}: "))
+      a=st.text_input(f"enter answer {i}: ")
       options=','.split(options)
       correct_answer_index = i['answer']
       correct_answer = options[correct_answer_index]
