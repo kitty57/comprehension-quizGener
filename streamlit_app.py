@@ -68,11 +68,12 @@ def main():
     for question, details in d.items():
         st.write(question)
         options = details['options']
-        st.markdown(options)
-        selected_option = st.selectbox("Choose your answer:", options)
+        st.write("Options:", ", ".join(options))
+        user_answer = st.text_input("Your answer:")
         correct_answer_index = details['answer']
+        correct_answer = options[correct_answer_index]
         feedback = details['feedback']
-        if selected_option == options[correct_answer_index]:
+        if user_answer.strip().lower() == correct_answer.strip().lower():
             st.write("Correct!")
         else:
             st.write("Incorrect. Feedback:", feedback)
