@@ -60,9 +60,12 @@ def generate(prompt0, prompt1, model):
 
 def main():
     st.title("Comprehension Question-Answering")
-    comprehension_questions = generate(prompt0, prompt1, model)
+    a = generate(prompt0, prompt1, model)
     st.subheader("Answer the questions:")
-    for question, details in comprehension_questions.items():
+    i=a.find('{')
+    extracted_string = a[i:-4]
+    d=eval(extracted_string)
+    for question, details in d.items():
         st.write(question)
         options = details['options']
         answer = st.radio("Choose your answer:", options)
