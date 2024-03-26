@@ -65,18 +65,18 @@ def main():
     i=a.find('{')
     extracted_string = a[i:-4]
     d=eval(extracted_string)
-    for idx, (question, details) in enumerate(d.items()):
-        st.write(question)
-        options = details['options']
-        st.write("Options:", ", ".join(options))
-        user_answer = st.text_input(f"Your answer for question {idx+1}:")
-        correct_answer_index = details['answer']
-        correct_answer = options[correct_answer_index]
-        feedback = details['feedback']
-        if user_answer.strip().lower() == correct_answer.strip().lower():
-            st.write("Correct!")
-        else:
-            st.write("Incorrect. Feedback:", feedback)
+    for i in d:
+      st.write("options: ",d[i]['options'])
+      options=d[i]['options']
+      a=st.text_input(f"enter answer {i}: "))
+      options=','.split(options)
+      correct_answer_index = i['answer']
+      correct_answer = options[correct_answer_index]
+      feedback = details['feedback']
+      if user_answer.strip().lower() == correct_answer.strip().lower():
+        st.write("Correct!")
+      else:
+        st.write("Incorrect. Feedback:", feedback)
 
 if __name__ == "__main__":
     main()
