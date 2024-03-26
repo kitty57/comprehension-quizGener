@@ -68,6 +68,7 @@ def main():
     for question, details in d.items():
         st.write(question)
         options = details['options']
+        st.markdown(options)
         selected_option = st.selectbox("Choose your answer:", options)
         correct_answer_index = details['answer']
         feedback = details['feedback']
