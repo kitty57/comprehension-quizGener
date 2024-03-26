@@ -1,2 +1,2 @@
-streamlit==0.90.0
-google-generativeai==1.0.0  # Make sure to specify the correct version
+streamlit
+google-generativeai
