@@ -62,27 +62,28 @@ def main():
     st.title("Comprehension Question-Answering")
     a = generate(prompt0, prompt1, model)
     st.subheader("Answer the questions:")
-    i=a.find('{')
+    i = a.find('{')
     extracted_string = a[i-1:-4]
-    st.write(extracted_string)
-    d=eval(extracted_string)
-    c=1
-    for i in d:
-      st.write("question: ",i)
-      st.write("options: ",d[i]['options'])
-      options1=d[i]['options']
-      options=options1.split(',')
-      st.write(options1,options)
-      user_answer=st.text_input(f"enter answer {c}: ")
-      correct_answer_index = d[i]['answer']
-      correct_answer_index=int(correct_answer_index)
-      correct_answer = options[correct_answer_index]
-      feedback = d[i]['feedback']
-      c+=1
-      if user_answer.strip().lower() == correct_answer.strip().lower():
-        st.write("Correct!")
-      else:
-        st.write("Incorrect. Feedback:", feedback)
+    d = eval(extracted_string)
+    c = 1
+    answered = False
+    for question, details in d.items():
+        st.write("Question:", question)
+        options = details['options'].split(',')
+        user_answer = st.text_input(f"Enter answer {c}: ")
+        correct_answer_index = int(details['answer'])
+        correct_answer = options[correct_answer_index]
+        feedback = details['feedback']
+        if user_answer.lower().strip() == correct_answer.lower().strip() and user_answer.strip() != '':
+            st.write("Correct!")
+            answered = True
+        elif user_answer.strip() != '':
+            st.write("Incorrect. Feedback:", feedback)
+            answered = True
+        
+        if answered:
+            c += 1
+            answered = False
 
 if __name__ == "__main__":
     main()
