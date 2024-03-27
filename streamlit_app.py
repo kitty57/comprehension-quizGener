@@ -65,15 +65,17 @@ def main():
     i=a.find('{')
     extracted_string = a[i:-4]
     d=eval(extracted_string)
+    c=1
     for i in d:
       st.write("question: ",i)
       st.write("options: ",d[i]['options'])
       options1=d[i]['options']
       options=','.split(options1)
-      user_answer=st.text_input()
+      user_answer=st.text_input(f"enter answer {c}: ")
       correct_answer_index = d[i]['answer']
       correct_answer = options[correct_answer_index]
       feedback = d[i]['feedback']
+      c+=1
       if user_answer.strip().lower() == correct_answer.strip().lower():
         st.write("Correct!")
       else:
