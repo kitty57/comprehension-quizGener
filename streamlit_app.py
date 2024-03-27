@@ -69,9 +69,8 @@ def main():
       st.write("question: ",i)
       st.write("options: ",d[i]['options'])
       options=d[i]['options']
-      a=st.text_input(f"enter answer {i}: ")
       options=','.split(options)
-      correct_answer_index = i['answer']
+      correct_answer_index = d[i]['answer']
       correct_answer = options[correct_answer_index]
       feedback = details['feedback']
       if user_answer.strip().lower() == correct_answer.strip().lower():
