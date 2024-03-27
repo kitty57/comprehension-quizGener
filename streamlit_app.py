@@ -70,7 +70,7 @@ def main():
     for question, details in d.items():
         st.write("Question:", question)
         options = details['options'].split(',')
-        user_answer = st.text_input(f"Enter answer {c}: ",key=f"answer_{c}")
+        user_answer = st.text_input(f"Enter answer {c}: ",key={c})
         correct_answer_index = int(details['answer'])
         correct_answer = options[correct_answer_index]
         feedback = details['feedback']
