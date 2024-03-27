@@ -63,7 +63,8 @@ def main():
     a = generate(prompt0, prompt1, model)
     st.subheader("Answer the questions:")
     i=a.find('{')
-    extracted_string = a[i:-4]
+    extracted_string = a[i-1:-4]
+    st.write(extracted_string)
     d=eval(extracted_string)
     c=1
     for i in d:
