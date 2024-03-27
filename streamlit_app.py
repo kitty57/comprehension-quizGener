@@ -73,6 +73,7 @@ def main():
       options=','.split(options1)
       user_answer=st.text_input(f"enter answer {c}: ")
       correct_answer_index = d[i]['answer']
+      correct_answer_index=int(correct_answer_index)
       correct_answer = options[correct_answer_index]
       feedback = d[i]['feedback']
       c+=1
