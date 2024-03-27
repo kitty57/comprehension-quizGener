@@ -70,6 +70,7 @@ def main():
       st.write("options: ",d[i]['options'])
       options1=d[i]['options']
       options=','.split(options1)
+      user_answer=st.text_input()
       correct_answer_index = d[i]['answer']
       correct_answer = options[correct_answer_index]
       feedback = d[i]['feedback']
