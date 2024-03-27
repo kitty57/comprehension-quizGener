@@ -68,8 +68,8 @@ def main():
     for i in d:
       st.write("question: ",i)
       st.write("options: ",d[i]['options'])
-      options=d[i]['options']
-      options=','.split(options)
+      options1=d[i]['options']
+      options=','.split(options1)
       correct_answer_index = d[i]['answer']
       correct_answer = options[correct_answer_index]
       feedback = d[i]['feedback']
