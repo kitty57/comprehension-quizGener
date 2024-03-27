@@ -66,6 +66,7 @@ def main():
     extracted_string = a[i:-4]
     d=eval(extracted_string)
     for i in d:
+      st.write("question: ",i)
       st.write("options: ",d[i]['options'])
       options=d[i]['options']
       a=st.text_input(f"enter answer {i}: ")
