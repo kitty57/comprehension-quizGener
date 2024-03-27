@@ -72,7 +72,7 @@ def main():
       options=','.split(options)
       correct_answer_index = d[i]['answer']
       correct_answer = options[correct_answer_index]
-      feedback = details['feedback']
+      feedback = d[i]['feedback']
       if user_answer.strip().lower() == correct_answer.strip().lower():
         st.write("Correct!")
       else:
