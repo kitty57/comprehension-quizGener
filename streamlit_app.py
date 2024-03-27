@@ -38,7 +38,7 @@ def prompt1(passage):
    C) Option 3
    D) Optilon 4
    the ouput should a dictionary where each key is the question and its value must be python dictionary of the form {{options,answer,feedback}}
-    where options correspond to a comma-seperated list of 4 options(a,b,c,d) to choose from(for example: what as the name? a)lucas  b)maua c) peter d)Ian
+    where options correspond to a comma-seperated list of 4 options(a,b,c,d) to choose from(for example: what as the name? a)lucas , b)maua ,c) peter, d)Ian
   and answer in the right option (either 0 or 1 or 2 or 3 representing the index of the right answer in the list) and feedback is the feedback.
    i want the output to be a python code of the datatype dict.
   ''' ,]
