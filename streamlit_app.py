@@ -71,6 +71,7 @@ def main():
       st.write("options: ",d[i]['options'])
       options1=d[i]['options']
       options=','.split(options1)
+      st.write(options1,options)
       user_answer=st.text_input(f"enter answer {c}: ")
       correct_answer_index = d[i]['answer']
       correct_answer_index=int(correct_answer_index)
