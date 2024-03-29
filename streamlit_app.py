@@ -74,7 +74,11 @@ comprehension_questions = generate(prompt0, prompt1, model)
 i=comprehension_questions.find('{')
 extracted_string =comprehension_questions[i:-5]
 st.write("Extracted string:", extracted_string)
-comprehension_question=eval(extracted_string)
+if extracted_string:
+  try:
+    comprehension_question = eval(extracted_string)
+  except (IndentationError, SyntaxError):
+    st.error("Error parsing comprehension question string. Please check the model output.")
 for question in comprehension_question:
   st.subheader(question['question'])
   options = question['options'].split(',')
