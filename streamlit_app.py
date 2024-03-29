@@ -2,11 +2,8 @@ import streamlit as st
 import google.generativeai as genai
 import ast
 import re
-import streamlit as st
-import google.generativeai as genai
-import ast
 
-genai.configure(api_key="AIzaSyDKcxALky8LiROaxb0RGMw8TLLOcujMRMY")
+genai.configure(api_key="AIzaSyDKcxALky8LiROaxb0RMY")
 model = genai.GenerativeModel(model_name="gemini-pro")
 
 
@@ -53,7 +50,7 @@ def prompt1(passage):
   where options correspond to a comma-separated list of 4 options (a, b, c, d) to choose from (for example: what as the name? a)lucas , b)maua ,c) peter, d)Ian)
   and answer is the right option index (0, 1, 2, or 3) and feedback is the feedback.
   '''
-         ]
+      ]
   return prompt_parts
 
 
@@ -70,16 +67,7 @@ def generate(prompt0, prompt1, model):
   human_prompt2 = prompt1(passage)
   response2 = model.generate_content(human_prompt2)
   comprehension_questions = response2.text
-  return comprehension_questions
 
-def generate(prompt0, prompt1, model):
-  human_prompt1 = prompt0()
-  response1 = model.generate_content(human_prompt1)
-  passage = response1.text
-  st.markdown(passage)
-  human_prompt2 = prompt1(passage)
-  response2 = model.generate_content(human_prompt2)
-  comprehension_questions = response2.text
   try:
     pattern = r"{.*}"  
     match = re.search(pattern, comprehension_questions)
@@ -99,6 +87,10 @@ def generate(prompt0, prompt1, model):
   except (ValueError, SyntaxError):
     st.error("Error parsing comprehension questions string. Please check the model output.")
     return None
+
+st.title("Comprehension Question-Answering")
+comprehension_questions = generate(prompt0, prompt1, model)
+
 if comprehension_questions:
   for question in comprehension_questions:
     st.subheader(question['question'])
@@ -107,7 +99,7 @@ if comprehension_questions:
     correct_answer_index = int(question['answer'])
     correct_answer = options[correct_answer_index]
     feedback = question['feedback']
-    if user_answer.strip() != '':  # Check if user entered an answer
+    if user_answer.strip() != '': 
       if user_answer.lower().strip() == correct_answer.lower().strip():
         st.write("Correct!")
       else:
