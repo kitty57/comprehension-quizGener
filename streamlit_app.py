@@ -66,12 +66,10 @@ def generate(prompt0, prompt1, model):
 
     human_prompt2 = prompt1(passage)
     response2 = model.generate_content(human_prompt2)
-    comprehension_questions_json = response2.text
+    comprehension_questions = response2.text
+    comprehension_questions1 = ast.literal_eval(comprehension_questions_json)
 
-    # Parse the JSON string into a list of dictionaries (assuming valid JSON format)
-    comprehension_questions = eval(comprehension_questions_json)
-
-    return comprehension_questions
+    return comprehension_questions1
 
 
 st.title("Comprehension Question-Answering")
