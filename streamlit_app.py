@@ -72,7 +72,7 @@ def generate(prompt0, prompt1, model):
 st.title("Comprehension Question-Answering")
 comprehension_questions = generate(prompt0, prompt1, model)
 i=comprehension_questions.find('{')
-extracted_string =comprehension_questions[i:-4]
+extracted_string =comprehension_questions[i:-5]
 st.write("Extracted string:", extracted_string)
 comprehension_question=eval(extracted_string)
 for question in comprehension_question:
