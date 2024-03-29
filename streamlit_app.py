@@ -4,48 +4,59 @@ import google.generativeai as genai
 
 genai.configure(api_key="AIzaSyDKcxALky8LiROaxb0RGMw8TLLOcujMRMY")
 model = genai.GenerativeModel(model_name="gemini-pro")
+
+
 def prompt0():
-  prompt_parts=[f'''generate a passage/story of 500 words to test a child's comprehensive and understanding ability.Return the generated passage''',]
-  return prompt_parts
+    prompt_parts = [f'''generate a passage/story of 500 words to test a child's comprehensive and understanding ability.Return the generated passage''', ]
+    return prompt_parts
+
 
 def prompt1(passage):
-  prompt_parts=[f'''
-  Given the following passage/story {passage}, generate comprehension mutiple choice questions to test a child's understanding. Provide feedback and explanations for each question.
-  Passage/Story:
-  [Insert the passage or story here.]
-  Instructions:
-  1. Generate multiple-choice only based on the content of the passage/story.
-  2. Ensure that the questions cover various aspects such as main ideas, details, inference, vocabulary, and author's purpose.
-  3. Provide feedback and explanations for each question to help the child learn from their mistakes.
-  4. Aim for a mix of easy, moderate, and challenging questions to cater to different levels of comprehension.
+    prompt_parts = [f'''
+    Given the following passage/story {passage}, generate comprehension mutiple choice questions to test a child's understanding. Provide feedback and explanations for each question.
 
-  Example questions:
-  1. What is the main idea of the passage/story?
-   A) Option 1
-   B) Option 2
-   C) Option 3
-   D) Option 4
+    Passage/Story:
+    [Insert the passage or story here.]
 
-   2. What does the word "_____" mean in the context of the passage/story?
-   A) Option 1
-   B) Option 2
-   C) Option 3
-   D) Option 4
+    Instructions:
+    1. Generate multiple-choice only based on the content of the passage/story.
+    2. Ensure that the questions cover various aspects such as main ideas, details, inference, vocabulary, and author's purpose.
+    3. Provide feedback and explanations for each question to help the child learn from their mistakes.
+    4. Aim for a mix of easy, moderate, and challenging questions to cater to different levels of comprehension.
 
-   3. Based on the passage/story, what can you infer about ____?
-   A) Option 1
-   B) Option 2
-   C) Option 3
-   D) Optilon 4
-   the ouput should a dictionary where each key is the question and its value must be python dictionary of the form {{options,answer,feedback}}
-    where options correspond to a comma-seperated list of 4 options(a,b,c,d) to choose from(for example: what as the name? a)lucas , b)maua ,c) peter, d)Ian
-  and answer in the right option (either 0 or 1 or 2 or 3 representing the index of the right answer in the list) and feedback is the feedback.
-   i want the output to be a python code of the datatype dict.
-  ''' ,]
-  return prompt_parts
+    Example questions:
+    1. What is the main idea of the passage/story?
+       A) Option 1
+       B) Option 2
+       C) Option 3
+       D) Option 4
+
+    2. What does the word "_____" mean in the context of the passage/story?
+       A) Option 1
+       B) Option 2
+       C) Option 3
+       D) Option 4
+
+    3. Based on the passage/story, what can you infer about ____?
+       A) Option 1
+       B) Option 2
+       C) Option 3
+       D) Optilon 4
+
+    The output should be a list of dictionaries where each dictionary represents a question with the following format:
+        {{'question': question_text, 'options': options_list, 'answer': correct_answer_index, 'feedback': feedback_text}}
+
+    where options correspond to a comma-separated list of 4 options (a, b, c, d) to choose from (for example: what as the name? a)lucas , b)maua ,c) peter, d)Ian)
+    and answer is the right option index (0, 1, 2, or 3) and feedback is the feedback.
+    '''
+                 ]
+    return prompt_parts
+
+
 def to_markdown(text):
-    text = text.replace('•', '  *')
-    return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+    text = text.replace('•', ' *')
+    return st.markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+
 
 def generate(prompt0, prompt1, model):
     human_prompt1 = prompt0()
@@ -55,35 +66,27 @@ def generate(prompt0, prompt1, model):
 
     human_prompt2 = prompt1(passage)
     response2 = model.generate_content(human_prompt2)
-    comprehension_questions = response2.text
+    comprehension_questions_json = response2.text
+
+    # Parse the JSON string into a list of dictionaries (assuming valid JSON format)
+    comprehension_questions = eval(comprehension_questions_json)
+
     return comprehension_questions
+
 
 def main():
     st.title("Comprehension Question-Answering")
-    a = generate(prompt0, prompt1, model)
-    st.subheader("Answer the questions:")
-    i = a.find('{')
-    extracted_string = a[i-1:-4]
-    d = eval(extracted_string)
-    c = 1
-    answered = False
-    for question, details in d.items():
-        st.write("Question:", question)
-        options = details['options'].split(',')
-        user_answer = st.text_input(f"Enter answer {c}: ",key=c)
-        correct_answer_index = int(details['answer'])
+    comprehension_questions = generate(prompt0, prompt1, model)
+
+    for question in comprehension_questions:
+        st.subheader(question['question'])
+        options = question['options'].split(',')
+        user_answer = st.text_input(f"Enter answer: ", key=question['question'])
+        correct_answer_index = int(question['answer'])
         correct_answer = options[correct_answer_index]
-        feedback = details['feedback']
+        feedback = question['feedback']
+
         if user_answer.lower().strip() == correct_answer.lower().strip() and user_answer.strip() != '':
             st.write("Correct!")
-            answered = True
         elif user_answer.strip() != '':
             st.write("Incorrect. Feedback:", feedback)
-            answered = True
-        
-        if answered:
-            c += 1
-            answered = False
-
-if __name__ == "__main__":
-    main()
