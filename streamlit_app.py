@@ -63,12 +63,10 @@ def generate(prompt0, prompt1, model):
     response1 = model.generate_content(human_prompt1)
     passage = response1.text
     st.markdown(passage)
-
     human_prompt2 = prompt1(passage)
     response2 = model.generate_content(human_prompt2)
     comprehension_questions = response2.text
-    comprehension_questions1 = ast.literal_eval(comprehension_questions_json)
-
+    comprehension_questions1 = ast.literal_eval(comprehension_questions)
     return comprehension_questions1
 
 
