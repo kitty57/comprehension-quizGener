@@ -66,13 +66,16 @@ def generate(prompt0, prompt1, model):
     human_prompt2 = prompt1(passage)
     response2 = model.generate_content(human_prompt2)
     comprehension_questions = response2.text
-    comprehension_questions1 = ast.literal_eval(comprehension_questions)
-    return comprehension_questions1
+    return comprehension_questions
 
 
 st.title("Comprehension Question-Answering")
 comprehension_questions = generate(prompt0, prompt1, model)
-for question in comprehension_questions:
+i=comprehension_questions.find('{')
+extracted_string = a[i:-4]
+st.write("Extracted string:", extracted_string)
+comprehension_question=eval(extracted_string)
+for question in comprehension_question:
   st.subheader(question['question'])
   options = question['options'].split(',')
   user_answer = st.text_input(f"Enter answer: ", key=question['question'])
